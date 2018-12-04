@@ -1,0 +1,33 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: comm_protocol.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           36        33         3      91.6
+    Branches                        60        56         4      93.3
+    FEC Condition Terms             29        23         6      79.3
+    FEC Expression Terms             0         0         0     100.0
+    FSMs                                                        74.0
+        States                      11        10         1      90.9
+        Transitions                 21        12         9      57.1
+    Toggle Bins                    494       144       350      29.1
+
+=================================================================================
+=== File: tb_comm_protocol.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            6         6         0     100.0
+    Branches                         0         0         0     100.0
+    FEC Condition Terms              0         0         0     100.0
+    FEC Expression Terms             0         0         0     100.0
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+    Toggle Bins                    136        70        66      51.4
+
+
+Total Coverage By File (code coverage only, filtered view): 74.6%
+
