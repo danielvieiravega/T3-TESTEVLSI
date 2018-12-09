@@ -30,9 +30,10 @@ begin
   -- Coloque abaixo as suas assercoes em PSL
   -------------------------------------------------
   -------------------------------------------------
-  --
-  --
-  --
+  -- PSL default clock is (rising_edge(clk));
+  -- PSL property rst_clean is always ( rst_n -> !valid_o; !busy_o; !msg_o );
+
+  -- PSL rst_clean_assertion: assert rst_clean;
   -------------------------------------------------
   -------------------------------------------------
 
