@@ -25,15 +25,26 @@ architecture comm_protocol of comm_protocol is
   signal buff_cnt: std_logic_vector(7 downto 0);
 begin
 
+
+        -- buff_hdr(7  downto  0) <= data_32_i(31 downto 24);      -- Source Address 
+        -- buff_hdr(15 downto  8) <= data_32_i(23 downto 16);      -- Destination Address 
+
   -------------------------------------------------
   -------------------------------------------------
   -- Coloque abaixo as suas assercoes em PSL
   -------------------------------------------------
   -------------------------------------------------
   -- PSL default clock is (rising_edge(clk));
-  -- PSL property rst_clean is always ( rst_n -> !valid_o; !busy_o; !msg_o );
-
+  -- PSL property rst_clean is always ( rst_n -> { not valid_o; not busy_o; not msg_o } );
+  -- PSL property send_1clk is always ( true -> next (send_i)) @(rising_edge(clk));
+  -- property msg_start is always ( send_i -> next () ) @(falling_edge(clk)); (Nao vejo nada um ciclo depois)
+  -- property msg_size 
+  -- property msg_inv_dst is always ( send_i -> next (data_32_i(31 downto 24) /= data_32_i(23 downto 16))) @(falling_edge(clk));
+  --
   -- PSL rst_clean_assertion: assert rst_clean;
+  -- PSL send_1clk_assertion: assert send_1clk;
+  -- msg_start_assertion: assert msg_start;
+  -- msg_size_assertion: assert msg_size;
   -------------------------------------------------
   -------------------------------------------------
 
