@@ -11,24 +11,24 @@ view assertions
 view fcovers
 
 do wave.do
-#add wave /DUV/rst_clean
-#add wave /DUV/send_1clk
-#add wave /DUV/msg_start
-#add wave /DUV/msg_size
-#add wave /DUV/msg_inv_dst
-#add wave /DUV/serv_msg
-#add wave /DUV/serv_cnt
-#add wave /DUV/fsm_hdr
-#add wave /DUV/fsm_crc
-#add wave /DUV/buf_cnt
-#add wave /DUV/buf_crc
-#add wave /DUV/buf_src
-#add wave /DUV/buf_dst
-#add wave /DUV/buf_size
-#add wave /DUV/buf_pld1
-#add wave /DUV/buf_pld2
-#add wave /DUV/buf_pld3
-#add wave /DUV/buf_pld4
+add wave /DUV/rst_clean
+add wave /DUV/send_1clk
+add wave /DUV/msg_start
+add wave /DUV/msg_size
+add wave /DUV/msg_inv_dst
+add wave /DUV/serv_msg
+add wave /DUV/serv_cnt
+add wave /DUV/fsm_hdr
+add wave /DUV/fsm_crc
+add wave /DUV/buf_cnt
+add wave /DUV/buf_crc
+add wave /DUV/buf_src
+add wave /DUV/buf_dst
+add wave /DUV/buf_size
+add wave /DUV/buf_pld1
+add wave /DUV/buf_pld2
+add wave /DUV/buf_pld3
+add wave /DUV/buf_pld4
 
 set StdArithNoWarnings 1
 

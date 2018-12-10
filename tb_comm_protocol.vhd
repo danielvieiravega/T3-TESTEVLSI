@@ -26,7 +26,7 @@ begin
     wait for 10 ns;
   end process;
 
-  rst_n  <= '0','1' after 50 ns, '0' after 1940 ns;
+  rst_n  <= '0','1' after 50 ns;
 
   send_i <= '0', '1' after  100 ns, '0' after  110 ns, 
                  '1' after  200 ns, '0' after  210 ns, 
@@ -36,7 +36,7 @@ begin
                  '1' after  650 ns, '0' after  660 ns,
                  '1' after  800 ns, '0' after  810 ns,
                  '1' after  900 ns, '0' after  910 ns,
-                 '1' after 1000 ns, '0' after 1020 ns,
+                 '1' after 1000 ns, '0' after 1010 ns,
                  '1' after 1100 ns, '0' after 1110 ns,
                  '1' after 1200 ns, '0' after 1210 ns,
                  '1' after 1300 ns, '0' after 1310 ns,
@@ -54,7 +54,7 @@ begin
                x"88776655" after 500 ns, -- Msg 1 - pck 4
 
                -- addr_src & addr_dst & service & payload size
-               x"00" & x"00" & x"02" & x"00" after 650 ns,
+               x"00" & x"10" & x"02" & x"00" after 650 ns,
 
                -- addr_src & addr_dst & service & payload size
                x"00" & x"04" & x"01" & x"06" after 800 ns,
@@ -66,10 +66,10 @@ begin
                x"88776655" after 1400 ns, -- Msg 2 - pck 6
 
                -- addr_src & addr_dst & service & payload size
-               x"00" & x"00" & x"02" & x"00" after 1650 ns,
+               x"00" & x"11" & x"02" & x"00" after 1650 ns,
 
                -- addr_src & addr_dst & service & payload size
-               x"00" & x"00" & x"01" & x"01" after 1800 ns,
+               x"00" & x"0B" & x"01" & x"01" after 1800 ns,
                x"44332211" after 1900 ns; -- Msg 3 - pck 1
 
 end tb_comm_protocol;

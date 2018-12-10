@@ -5,14 +5,14 @@ Coverage Report Summary Data by file
 =================================================================================
     Enabled Coverage            Active      Hits    Misses % Covered
     ----------------            ------      ----    ------ ---------
-    Stmts                           36        33         3      91.6
-    Branches                        60        56         4      93.3
-    FEC Condition Terms             29        23         6      79.3
+    Stmts                           36        36         0     100.0
+    Branches                        60        60         0     100.0
+    FEC Condition Terms             29        28         1      96.5
     FEC Expression Terms             0         0         0     100.0
-    FSMs                                                        74.0
-        States                      11        10         1      90.9
-        Transitions                 21        12         9      57.1
-    Toggle Bins                    494       144       350      29.1
+    FSMs                                                        80.9
+        States                      11        11         0     100.0
+        Transitions                 21        13         8      61.9
+    Toggle Bins                    534       138       396      25.8
 
 =================================================================================
 === File: tb_comm_protocol.vhd
@@ -26,8 +26,10 @@ Coverage Report Summary Data by file
     FSMs                                                       100.0
         States                       0         0         0     100.0
         Transitions                  0         0         0     100.0
-    Toggle Bins                    136        70        66      51.4
+    Toggle Bins                    140        69        71      49.2
 
 
-Total Coverage By File (code coverage only, filtered view): 74.6%
+TOTAL ASSERTION COVERAGE: 82.3%  ASSERTIONS: 17
+
+Total Coverage By File (code coverage only, filtered view): 81.6%
 

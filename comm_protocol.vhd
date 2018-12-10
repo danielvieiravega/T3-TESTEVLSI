@@ -35,16 +35,55 @@ begin
   -------------------------------------------------
   -------------------------------------------------
   -- PSL default clock is (rising_edge(clk));
-  -- PSL property rst_clean is always ( rst_n -> { not valid_o; not busy_o; not msg_o } );
-  -- PSL property send_1clk is always ( true -> next (send_i)) @(rising_edge(clk));
-  -- property msg_start is always ( send_i -> next () ) @(falling_edge(clk)); (Nao vejo nada um ciclo depois)
-  -- property msg_size 
-  -- property msg_inv_dst is always ( send_i -> next (data_32_i(31 downto 24) /= data_32_i(23 downto 16))) @(falling_edge(clk));
+  -- PSL property rst_clean1 is never ( not rst_n and valid_o and  busy_o and msg_o );
+  -- PSL property send_1clk1 is always clk and send_i -> next not send_i @(rising_edge(clk));
+  -- PSL property msg_start1 is always ( send_i = '1' and data_32_i(15 downto 8) = x"01" -> next (msg_o) ) @(falling_edge(clk));
+  -- PSL property msg_size1 is always ( send_i = '1' and data_32_i(15 downto 8) = x"01" -> next (data_32_i(7 downto 6) = x"00")) @(falling_edge(clk));
+  -- PSL property msg_inv_dst1 is always ( data_32_i(15 downto 8) = x"01" and current_state = IDLE-> (data_32_i(31 downto 24) /= data_32_i(23 downto 16))) @(falling_edge(clk));
+  -- PSL property serv_msg1 is always ( send_i = '1' and data_32_i(15 downto 8) = x"01" -> next (msg_o and busy_o and valid_o) abort rst_n) @(falling_edge(clk));
+  -- PSL property serv_cnt1 is always ( send_i = '1' and data_32_i(15 downto 8) = x"02" -> next (not msg_o and (busy_o[*1]) and not valid_o) abort rst_n) @(falling_edge(clk));
+  -- PSL property fsm_hdr1 is always ( {send_i = '1' and data_32_i(15 downto 8) = x"01"} |=> ({current_state = HDST} |=> {current_state = HSRC} |=> {current_state = HSIZE}) abort not rst_n)  @(falling_edge(clk));
+  
+  -- PSL property fsm_crc1 is forall i in 0..(4*data_32_i(5 downto 0)*8+8):
+  -- always (current_state = CRC and ) abort rst_n  @(rising_edge(clk));
+  
+  --  property fsm_crc1 is always next_event(send_i = '1' and data_32_i(15 downto 8) = x"01")[(4*data_32_i(7 downto 0)*8+8)](current_state = CRC) abort rst_n  @(rising_edge(clk));
+  
+  
+  
   --
-  -- PSL rst_clean_assertion: assert rst_clean;
-  -- PSL send_1clk_assertion: assert send_1clk;
-  -- msg_start_assertion: assert msg_start;
-  -- msg_size_assertion: assert msg_size;
+  -- ASSERCOES BUFFERS
+  --
+  -- PSL property buf_cnt1 is always ({current_state = CNT} |=> data_8_o <= buff_cnt )  @(falling_edge(clk));
+  -- PSL property buf_crc1 is always ({current_state = CRC} |=> data_8_o <= buff_crc )  @(falling_edge(clk));
+  -- PSL property buf_src1 is always (current_state = HSRC -> data_8_o <= buff_hdr(7  downto  0) )  @(falling_edge(clk));
+  -- PSL property buf_dst1 is always (current_state = HDST -> data_8_o <= buff_hdr(15 downto  8) )  @(falling_edge(clk));
+  -- PSL property buf_size1 is always (current_state = HSIZE -> data_8_o <= buff_hdr(23 downto 16) )  @(falling_edge(clk));
+  -- PSL property buf_pld11 is always (current_state = PLD1 -> data_8_o <= buff_pld(7  downto  0) )  @(falling_edge(clk));
+  -- PSL property buf_pld21 is always (current_state = PLD2 -> data_8_o <= buff_pld(15  downto  8) )  @(falling_edge(clk));
+  -- PSL property buf_pld31 is always (current_state = PLD3 -> data_8_o <= buff_pld(23 downto  16) )  @(falling_edge(clk));
+  -- PSL property buf_pld41 is always (current_state = PLD4 -> data_8_o <= buff_pld(31  downto  24) )  @(falling_edge(clk));
+  --
+  -- PSL rst_clean: assert rst_clean1;
+  -- PSL send_1clk: assert send_1clk1;
+  -- PSL msg_start: assert msg_start1;  
+  -- PSL msg_size: assert msg_size1;
+  -- PSL msg_inv_dst: assert msg_inv_dst1;
+  -- PSL serv_msg: assert serv_msg1;
+  -- PSL serv_cnt: assert serv_cnt1;
+  -- PSL fsm_hdr: assert fsm_hdr1;
+  -- PSL fsm_crc: assert fsm_crc1;
+  -- PSL buf_cnt: assert buf_cnt1;
+  -- PSL buf_crc: assert buf_crc1;
+  -- PSL buf_src: assert buf_src1;
+  -- PSL buf_dst: assert buf_dst1;
+  -- PSL buf_size: assert buf_size1;
+  -- PSL buf_pld1: assert buf_pld11;
+  -- PSL buf_pld2: assert buf_pld21;
+  -- PSL buf_pld3: assert buf_pld31;
+  -- PSL buf_pld4: assert buf_pld41;
+  
+  
   -------------------------------------------------
   -------------------------------------------------
 
@@ -102,8 +141,8 @@ begin
       counter <= (others => '0');
     elsif clk'event and clk = '1' then
       if current_state = IDLE and send_i = '1' and data_32_i(15 downto 8) = x"01" then
-        counter <= data_32_i(7 downto 0);
-      elsif current_state = PLD4 and counter /= x"00" then
+        counter <= data_32_i(7 downto 0)-1;
+      elsif current_state = PLD4 and counter > x"00" then
         counter <= counter - 1;
       end if;
     end if;
@@ -178,3 +217,4 @@ begin
               buff_pld(31 downto 24) when current_state = PLD4  else (others => '0');
 
 end comm_protocol;
+
